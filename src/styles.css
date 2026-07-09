@@ -2794,6 +2794,43 @@ body.motion-ready .work-glow-card:not(.is-visible) .parallax-image {
 }
 
 @media (max-width: 980px) {
+  .below-hero-grainient {
+    display: none;
+  }
+
+  .site-header,
+  .hero-ip-card,
+  .hero-copy-block,
+  .below-hero-surface .intro-strip,
+  .below-hero-surface .beauty-showcase,
+  .below-hero-surface .wine-showcase,
+  .profile-info-block {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .hero-motion-field {
+    opacity: 0.18;
+    transform: none;
+  }
+
+  .border-glow-card::before,
+  .border-glow-card::after,
+  .border-glow-card > .edge-light,
+  .work-glow-card .border-glow-inner::before,
+  .portrait-photo::after {
+    display: none;
+  }
+
+  .parallax-image,
+  .beauty-all-card img,
+  .beauty-hero-shot img,
+  .beauty-side-shot img,
+  .beauty-mini-shot img {
+    transform: none !important;
+    transition: none !important;
+  }
+
   .container {
     padding: 0 28px;
   }

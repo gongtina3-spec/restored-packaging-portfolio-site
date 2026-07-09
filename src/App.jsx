@@ -14,6 +14,32 @@ import {
 const Grainient = React.lazy(() => import('./Grainient'));
 
 const USE_IP_HERO_TRIAL = true;
+const COMPACT_VIEW_QUERY = '(max-width: 980px)';
+const MOBILE_BEAUTY_ITEMS_PER_GROUP = 4;
+const MOBILE_WINE_ARCHIVE_COUNT = 10;
+
+function getCompactViewport() {
+  return typeof window !== 'undefined' && window.matchMedia?.(COMPACT_VIEW_QUERY).matches;
+}
+
+function useCompactViewport() {
+  const [isCompact, setIsCompact] = useState(getCompactViewport);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia?.(COMPACT_VIEW_QUERY);
+    if (!mediaQuery) return undefined;
+
+    const handleChange = () => setIsCompact(mediaQuery.matches);
+    handleChange();
+    mediaQuery.addEventListener?.('change', handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener?.('change', handleChange);
+    };
+  }, []);
+
+  return isCompact;
+}
 
 const workGlowProps = {
   edgeSensitivity: 24,
@@ -47,10 +73,15 @@ function PortfolioImage({ eager = false, ...props }) {
   );
 }
 
-function DeferredGrainient({ className = '', ...props }) {
+function DeferredGrainient({ className = '', disabled = false, ...props }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    if (disabled) {
+      setReady(false);
+      return undefined;
+    }
+
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     if (reduceMotion) return undefined;
 
@@ -72,9 +103,9 @@ function DeferredGrainient({ className = '', ...props }) {
       if (idleId) window.cancelIdleCallback(idleId);
       window.clearTimeout(timerId);
     };
-  }, []);
+  }, [disabled]);
 
-  if (!ready) return <div className={className} aria-hidden="true" />;
+  if (disabled || !ready) return <div className={className} aria-hidden="true" />;
 
   return (
     <React.Suspense fallback={<div className={className} aria-hidden="true" />}>
@@ -83,8 +114,10 @@ function DeferredGrainient({ className = '', ...props }) {
   );
 }
 
-function usePortfolioMotion() {
+function usePortfolioMotion(disabled = false) {
   useEffect(() => {
+    if (disabled) return undefined;
+
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     const motionSets = [
       ['.section-heading', 'motion-heading'],
@@ -172,9 +205,11 @@ function usePortfolioMotion() {
       window.clearTimeout(visibilityFallback);
       observer.disconnect();
     };
-  }, []);
+  }, [disabled]);
 
   useEffect(() => {
+    if (disabled) return undefined;
+
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     if (reduceMotion) return undefined;
 
@@ -216,7 +251,7 @@ function usePortfolioMotion() {
       window.removeEventListener('resize', requestUpdate);
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [disabled]);
 }
 
 function useTypewriter(text, speed = 24, startDelay = 520) {
@@ -250,12 +285,23 @@ function useTypewriter(text, speed = 24, startDelay = 520) {
 
 function App() {
   const heroRef = useRef(null);
+  const isCompact = useCompactViewport();
+  const visibleBeautyGroups = isCompact
+    ? beautyAllGroups.map((group) => ({
+        ...group,
+        items: group.items.slice(0, MOBILE_BEAUTY_ITEMS_PER_GROUP),
+      }))
+    : beautyAllGroups;
+  const visibleBeautyCount = visibleBeautyGroups.reduce((total, group) => total + group.items.length, 0);
+  const visibleWineImages = isCompact ? wineAllImages.slice(0, MOBILE_WINE_ARCHIVE_COUNT) : wineAllImages;
   const { displayed: typedDescription, done: typewriterDone } = useTypewriter(
     siteInfo.heroDescription,
   );
-  usePortfolioMotion();
+  usePortfolioMotion(isCompact);
 
   useEffect(() => {
+    if (isCompact) return undefined;
+
     const hero = heroRef.current;
     if (!hero) return undefined;
 
@@ -288,7 +334,7 @@ function App() {
       hero.removeEventListener('pointermove', handlePointerMove);
       hero.removeEventListener('pointerleave', handlePointerLeave);
     };
-  }, []);
+  }, [isCompact]);
 
   return (
     <main className="portfolio-shell">
@@ -385,6 +431,7 @@ function App() {
       <div className="below-hero-surface">
         <DeferredGrainient
           className="below-hero-grainient"
+          disabled={isCompact}
           color1="#fbfad3"
           color2="#c8c4ba"
           color3="#e4a2a2"
@@ -509,12 +556,12 @@ function App() {
               <div className="beauty-all-works">
                 <div className="beauty-all-head">
                   <span>Complete Beauty Archive</span>
-                  <strong>{beautyAllImages.length} visuals</strong>
+                  <strong>{isCompact ? visibleBeautyCount : beautyAllImages.length} visuals</strong>
                   <p>覆盖护肤套盒、礼盒系统、功效精华、面霜瓶罐与日化单品，呈现从系列规划到包装细节的完整美妆视觉方案。</p>
                 </div>
 
                 <div className="beauty-category-list">
-                  {beautyAllGroups.map((group) => (
+                  {visibleBeautyGroups.map((group) => (
                     <section className="beauty-category" key={group.title}>
                       <div className="beauty-category-head">
                         <span>{group.titleEn}</span>
@@ -617,12 +664,12 @@ function App() {
               <div className="beauty-all-works">
                 <div className="beauty-all-head">
                   <span>Complete Wine Archive</span>
-                  <strong>{wineAllImages.length} visuals</strong>
+                  <strong>{visibleWineImages.length} visuals</strong>
                   <p>围绕坛酒器型、瓷瓶造型、瓶标纹样与礼盒结构展开，呈现从单瓶识别到成套礼赠包装的完整酒类视觉方案。</p>
                 </div>
 
                 <div className="beauty-all-grid">
-                  {wineAllImages.map((item, index) => (
+                  {visibleWineImages.map((item, index) => (
                     <WorkGlow className="work-glow-archive" key={item.image}>
                       <a className="beauty-all-card" href={item.image} target="_blank" rel="noreferrer">
                         <figure>
