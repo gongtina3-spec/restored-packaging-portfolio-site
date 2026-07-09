@@ -86,9 +86,6 @@ function DeferredGrainient({ className = '', ...props }) {
 function usePortfolioMotion() {
   useEffect(() => {
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-    const openingTimer = window.setTimeout(() => {
-      document.body.classList.add('opening-complete');
-    }, reduceMotion ? 0 : 2920);
     const motionSets = [
       ['.section-heading', 'motion-heading'],
       ['.beauty-showcase', 'motion-section'],
@@ -144,7 +141,6 @@ function usePortfolioMotion() {
     if (reduceMotion) {
       motionTargets.forEach((element) => element.classList.add('is-visible'));
       return () => {
-        window.clearTimeout(openingTimer);
         window.clearTimeout(visibilityFallback);
       };
     }
@@ -152,7 +148,6 @@ function usePortfolioMotion() {
     if (!('IntersectionObserver' in window)) {
       motionTargets.forEach((element) => element.classList.add('is-visible'));
       return () => {
-        window.clearTimeout(openingTimer);
         window.clearTimeout(visibilityFallback);
       };
     }
@@ -174,7 +169,6 @@ function usePortfolioMotion() {
     motionTargets.forEach((element) => observer.observe(element));
 
     return () => {
-      window.clearTimeout(openingTimer);
       window.clearTimeout(visibilityFallback);
       observer.disconnect();
     };
@@ -298,10 +292,6 @@ function App() {
 
   return (
     <main className="portfolio-shell">
-      <div className="opening-animation" aria-hidden="true">
-        <span>PERSONAL PORTFOLIO</span>
-        <i />
-      </div>
       <header className="site-header">
         <div className="container nav">
           <a className="brand" href="#top" aria-label="返回首页">
@@ -331,9 +321,6 @@ function App() {
 
           {USE_IP_HERO_TRIAL ? (
             <figure className="hero-ip-stage" aria-label="个人 IP 形象动态展示">
-              <span className="hero-ip-backdrop" aria-hidden="true" />
-              <span className="hero-ip-ring hero-ip-ring-one" aria-hidden="true" />
-              <span className="hero-ip-ring hero-ip-ring-two" aria-hidden="true" />
               <span className="hero-ip-card hero-ip-card-left" aria-hidden="true">
                 <em>Beauty</em>
                 <strong>Skincare</strong>
@@ -344,9 +331,6 @@ function App() {
               </span>
               <span className="hero-ip-character-wrap">
                 <PortfolioImage eager className="hero-ip-character" src={siteInfo.heroIpImage} alt="个人 IP 形象" />
-              </span>
-              <span className="hero-ip-caption" aria-hidden="true">
-                Personal IP / Packaging Designer
               </span>
             </figure>
           ) : (

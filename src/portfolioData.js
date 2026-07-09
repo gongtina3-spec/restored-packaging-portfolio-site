@@ -5,7 +5,7 @@ export const siteInfo = {
   brandSubline: 'Packaging Design',
   heroTitle: '个人作品集',
   heroDisplayTitle: 'PORTFOLIO',
-  heroIpImage: asset('hero-ip-character-760.png'),
+  heroIpImage: asset('hero-ip-character-cutout.png'),
   indexGuideImage: asset('index-ip-guide-lookhere-clean-420.png'),
   heroKicker: 'Luxury Skincare / Gift Box Packaging',
   heroLead: '专注高端护肤&礼盒包装设计',
