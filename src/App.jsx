@@ -4,6 +4,8 @@ import {
   beautyAllGroups,
   beautyAllImages,
   beautyShowcase,
+  ecommerceAllImages,
+  ecommerceShowcase,
   introduceInfo,
   siteInfo,
   strengths,
@@ -17,6 +19,7 @@ const USE_IP_HERO_TRIAL = true;
 const COMPACT_VIEW_QUERY = '(max-width: 980px)';
 const MOBILE_BEAUTY_ITEMS_PER_GROUP = 4;
 const MOBILE_WINE_ARCHIVE_COUNT = 10;
+const MOBILE_ECOMMERCE_ARCHIVE_COUNT = 8;
 
 function getCompactViewport() {
   return typeof window !== 'undefined' && window.matchMedia?.(COMPACT_VIEW_QUERY).matches;
@@ -294,6 +297,9 @@ function App() {
     : beautyAllGroups;
   const visibleBeautyCount = visibleBeautyGroups.reduce((total, group) => total + group.items.length, 0);
   const visibleWineImages = isCompact ? wineAllImages.slice(0, MOBILE_WINE_ARCHIVE_COUNT) : wineAllImages;
+  const visibleEcommerceImages = isCompact
+    ? ecommerceAllImages.slice(0, MOBILE_ECOMMERCE_ARCHIVE_COUNT)
+    : ecommerceAllImages;
   const { displayed: typedDescription, done: typewriterDone } = useTypewriter(
     siteInfo.heroDescription,
   );
@@ -675,6 +681,93 @@ function App() {
                         <figure>
                           <PortfolioImage src={item.image} alt={item.title} />
                         </figure>
+                        <div>
+                          <span>{String(index + 1).padStart(2, '0')}</span>
+                          <strong>{item.title}</strong>
+                          <small>{item.label}</small>
+                        </div>
+                      </a>
+                    </WorkGlow>
+                  ))}
+                </div>
+              </div>
+            </article>
+
+            <article className="beauty-showcase ecommerce-showcase">
+              <div className="beauty-showcase-head">
+                <div>
+                  <div className="case-kicker">
+                    <span>{ecommerceShowcase.label}</span>
+                    <span>{ecommerceShowcase.titleEn}</span>
+                    <span>{ecommerceShowcase.year}</span>
+                  </div>
+                  <h3>{ecommerceShowcase.title}</h3>
+                </div>
+                <p>{ecommerceShowcase.summary}</p>
+              </div>
+
+              <div className="beauty-curated-grid">
+                <WorkGlow className="work-glow-feature">
+                  <a className="beauty-hero-shot" href={ecommerceShowcase.hero.image} target="_blank" rel="noreferrer">
+                    <PortfolioImage src={ecommerceShowcase.hero.image} alt={ecommerceShowcase.hero.title} />
+                    <span>{ecommerceShowcase.hero.label}</span>
+                    <strong>{ecommerceShowcase.hero.title}</strong>
+                  </a>
+                </WorkGlow>
+
+                <div className="beauty-side-stack">
+                  {ecommerceShowcase.side.map((item) => (
+                    <WorkGlow className="work-glow-side" key={item.title}>
+                      <a className="beauty-side-shot" href={item.image} target="_blank" rel="noreferrer">
+                        <PortfolioImage src={item.image} alt={item.title} />
+                        <span>{item.label}</span>
+                        <strong>{item.title}</strong>
+                      </a>
+                    </WorkGlow>
+                  ))}
+                </div>
+              </div>
+
+              <div className="beauty-index-row">
+                <div className="beauty-index-copy beauty-index-guide ecommerce-index-guide">
+                  <span>Curated Commerce Index</span>
+                  <figure className="index-ip-guide" aria-hidden="true">
+                    <PortfolioImage src={siteInfo.indexGuideImage} alt="" />
+                  </figure>
+                  <p>从首图识别、功效卖点到系列化延展，展示电商消费品包装在快速阅读与品牌统一之间的平衡。</p>
+                </div>
+                <div className="beauty-mini-gallery">
+                  {ecommerceShowcase.gallery.map((item, index) => (
+                    <WorkGlow className="work-glow-mini" key={item.title}>
+                      <a className={`beauty-mini-shot${item.thumbnail ? ' ecommerce-cover-shot' : ''}`} href={item.image} target="_blank" rel="noreferrer">
+                        <PortfolioImage src={item.thumbnail || item.image} alt={item.title} />
+                        <span>{String(index + 1).padStart(2, '0')}</span>
+                        <div>
+                          <strong>{item.title}</strong>
+                          <small>{item.label}</small>
+                        </div>
+                      </a>
+                    </WorkGlow>
+                  ))}
+                </div>
+              </div>
+
+              <div className="tag-row beauty-tag-row">
+                {ecommerceShowcase.tags.map((tag) => <span key={tag}>{tag}</span>)}
+              </div>
+
+              <div className="beauty-all-works">
+                <div className="beauty-all-head">
+                  <span>Complete E-commerce Archive</span>
+                  <strong>{visibleEcommerceImages.length} visuals</strong>
+                  <p>涵盖护肤、身体护理、儿童洗护、家清与外用护理品类，呈现多品类电商包装的卖点构建与视觉区隔。</p>
+                </div>
+
+                <div className="beauty-all-grid">
+                  {visibleEcommerceImages.map((item, index) => (
+                    <WorkGlow className="work-glow-archive" key={item.image}>
+                      <a className="beauty-all-card" href={item.image} target="_blank" rel="noreferrer">
+                        <figure><PortfolioImage src={item.image} alt={item.title} /></figure>
                         <div>
                           <span>{String(index + 1).padStart(2, '0')}</span>
                           <strong>{item.title}</strong>

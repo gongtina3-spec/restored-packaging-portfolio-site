@@ -1137,6 +1137,79 @@ h3 {
   color: var(--accent);
 }
 
+.ecommerce-showcase {
+  border-color: rgba(19, 92, 112, 0.2);
+  background:
+    linear-gradient(90deg, rgba(19, 92, 112, 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(19, 92, 112, 0.04) 1px, transparent 1px),
+    linear-gradient(140deg, #eef3ef 0%, #dfeaec 56%, #f4f1e8 100%);
+  background-size: 72px 72px, 72px 72px, auto;
+}
+
+.below-hero-surface .ecommerce-showcase {
+  background:
+    linear-gradient(90deg, rgba(19, 92, 112, 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(19, 92, 112, 0.04) 1px, transparent 1px),
+    linear-gradient(140deg, rgba(238, 243, 239, 0.88) 0%, rgba(223, 234, 236, 0.84) 56%, rgba(244, 241, 232, 0.88) 100%);
+}
+
+.ecommerce-showcase::before {
+  content: "COMMERCE";
+  color: rgba(19, 92, 112, 0.055);
+  font-size: clamp(82px, 9vw, 158px);
+}
+
+.ecommerce-showcase .beauty-showcase-head,
+.ecommerce-showcase .beauty-all-works {
+  border-color: rgba(19, 92, 112, 0.18);
+}
+
+.ecommerce-showcase .case-kicker,
+.ecommerce-showcase .beauty-all-head span,
+.ecommerce-showcase .beauty-all-card div > span,
+.ecommerce-showcase .beauty-index-copy span {
+  color: #135c70;
+}
+
+.ecommerce-showcase .beauty-index-row {
+  border-color: rgba(19, 92, 112, 0.18);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.ecommerce-index-guide p {
+  color: #465f63;
+}
+
+.ecommerce-showcase .beauty-all-card {
+  border-color: rgba(19, 92, 112, 0.13);
+  background: rgba(255, 255, 255, 0.46);
+}
+
+.ecommerce-showcase .beauty-all-card:hover {
+  border-color: rgba(19, 92, 112, 0.34);
+}
+
+.ecommerce-showcase .beauty-all-card figure {
+  aspect-ratio: 4 / 3;
+  padding: 12px;
+  background: rgba(250, 251, 249, 0.9);
+}
+
+.ecommerce-showcase .beauty-all-card img {
+  object-fit: contain;
+  object-position: center;
+}
+
+.ecommerce-showcase .beauty-all-card:hover img {
+  transform: scale(1.01);
+}
+
+.ecommerce-showcase .tag-row span {
+  border-color: rgba(19, 92, 112, 0.2);
+  background: rgba(19, 92, 112, 0.07);
+  color: #135c70;
+}
+
 .beauty-showcase-head {
   position: relative;
   z-index: 1;
@@ -3148,5 +3221,69 @@ body.motion-ready .work-glow-card:not(.is-visible) .parallax-image {
 
   .footer h2 {
     font-size: 32px;
+  }
+}
+
+/* E-commerce images are product boards: preserve every edge instead of cropping. */
+.ecommerce-showcase .beauty-hero-shot,
+.ecommerce-showcase .beauty-side-shot,
+.ecommerce-showcase .beauty-mini-shot,
+.ecommerce-showcase .beauty-all-card figure {
+  background: #f8faf9;
+}
+
+.ecommerce-showcase .beauty-hero-shot img,
+.ecommerce-showcase .beauty-side-shot img,
+.ecommerce-showcase .beauty-mini-shot img,
+.ecommerce-showcase .beauty-all-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+.ecommerce-showcase .beauty-hero-shot img,
+.ecommerce-showcase .beauty-side-shot img {
+  padding: 18px;
+}
+
+.ecommerce-showcase .beauty-mini-shot {
+  grid-template-rows: minmax(240px, 1fr) auto;
+}
+
+.ecommerce-showcase .beauty-mini-shot img {
+  min-height: 240px;
+  aspect-ratio: auto;
+  padding: 10px;
+}
+
+.ecommerce-showcase .ecommerce-cover-shot img {
+  object-fit: cover !important;
+  padding: 0;
+}
+
+.ecommerce-showcase .beauty-all-card figure {
+  aspect-ratio: 4 / 3;
+  padding: 14px;
+}
+
+.ecommerce-showcase .beauty-hero-shot:hover img,
+.ecommerce-showcase .beauty-side-shot:hover img,
+.ecommerce-showcase .beauty-mini-shot:hover img,
+.ecommerce-showcase .beauty-all-card:hover img {
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .ecommerce-showcase .beauty-mini-shot {
+    grid-template-rows: minmax(280px, 1fr) auto;
+  }
+
+  .ecommerce-showcase .beauty-mini-shot img {
+    min-height: 280px;
+  }
+
+  .ecommerce-showcase .beauty-all-card figure {
+    aspect-ratio: 1 / 1;
   }
 }

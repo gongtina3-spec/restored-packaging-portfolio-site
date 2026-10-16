@@ -7,8 +7,8 @@ export const siteInfo = {
   heroDisplayTitle: 'PORTFOLIO',
   heroIpImage: asset('hero-ip-character-cutout.png'),
   indexGuideImage: asset('index-ip-guide-lookhere-clean-420.png'),
-  heroKicker: 'Luxury Skincare / Gift Box Packaging',
-  heroLead: '专注高端护肤&礼盒包装设计',
+  heroKicker: 'Skincare / Gift Box / E-commerce Design',
+  heroLead: '专注高端护肤、礼盒包装与电商产品视觉',
   heroDescription:
     '具备完整产品落地经验，兼顾视觉美感与印刷工艺、备案规范、擅长极简高奢、日化全品类包装、科技医美多风格视觉输出',
   intro:
@@ -23,7 +23,7 @@ export const introduceInfo = {
   name: '龚领领',
   photo: asset('profile-photo.jpg'),
   roles: ['包装设计师', '品牌设计师'],
-  headline: '专注高端护肤、礼盒包装与品牌视觉落地',
+  headline: '专注高端护肤、礼盒包装、电商产品与品牌视觉落地',
   summary:
     '具备从包装概念、系列视觉、结构配合到印刷工艺沟通的完整项目经验。关注品牌调性、货架识别和生产落地之间的平衡，适合高端护肤、日化全品类、酒类礼盒与科技医美方向的包装视觉输出。',
   stats: [
@@ -75,9 +75,9 @@ export const introduceInfo = {
 
 export const strengths = [
   {
-    value: '2',
+    value: '3',
     label: '作品集方向',
-    text: '美妆护肤品类，酒类。',
+    text: '美妆护肤、酒类礼盒与电商产品视觉。',
   },
   {
     value: '40+',
@@ -317,6 +317,86 @@ export const wineAllImages = wineImageTitles.map((title, index) => {
   return {
     image: asset(`wine/all/wine-all-${number}.jpg`),
     label: `Wine Visual ${number}`,
+    title,
+  };
+});
+
+export const ecommerceShowcase = {
+  label: '03 / E-commerce Design',
+  title: '电商产品视觉',
+  titleEn: 'E-commerce Product System',
+  year: '2026',
+  summary:
+    '面向功效护理、儿童洗护与家庭清洁等电商消费品类，建立兼顾信息转化、卖点层级与货架识别的包装视觉系统。',
+  hero: {
+    image: asset('ecommerce/all/ecommerce-all-15.jpg'),
+    label: 'Hero Product',
+    title: '8D 玻尿酸钠精华',
+  },
+  side: [
+    {
+      image: asset('ecommerce/all/ecommerce-all-02.jpg'),
+      label: 'Beauty / Mask',
+      title: '重组胶原面膜',
+    },
+    {
+      image: asset('ecommerce/all/ecommerce-all-11.jpg'),
+      label: 'Home Care / Series',
+      title: '强力除垢喷剂系列',
+    },
+  ],
+  gallery: [
+    {
+      image: asset('ecommerce/all/ecommerce-all-01.jpg'),
+      thumbnail: asset('ecommerce/thumbs/ecommerce-oral-care-right.jpg'),
+      label: 'Oral Care',
+      title: '含氟护龈牙膏',
+    },
+    {
+      image: asset('ecommerce/all/ecommerce-all-05.jpg'),
+      thumbnail: asset('ecommerce/thumbs/ecommerce-body-care-right.jpg'),
+      label: 'Body Care',
+      title: '乳酸烟酰胺身体乳',
+    },
+    {
+      image: asset('ecommerce/all/ecommerce-all-06.jpg'),
+      thumbnail: asset('ecommerce/thumbs/ecommerce-kids-care-right.jpg'),
+      label: 'Kids Care',
+      title: '2合1 儿童洗发沐浴露',
+    },
+    {
+      image: asset('ecommerce/all/ecommerce-all-12.jpg'),
+      thumbnail: asset('ecommerce/thumbs/ecommerce-b5-cover.jpg'),
+      label: 'Essence',
+      title: 'B5 修护精华',
+    },
+  ],
+  tags: ['电商包装', '卖点可视化', '功效护理', '日化产品', '系列化视觉'],
+};
+
+const ecommerceImageTitles = [
+  '含氟护龈牙膏',
+  '重组胶原面膜',
+  '油养淡唇纹',
+  '氨甲环酸亮肤乳',
+  '乳酸烟酰胺身体乳',
+  '2合1 儿童洗发沐浴露',
+  '德国维E马油膏',
+  '重组Ⅲ型胶原蛋白膏',
+  '重组Ⅲ型胶原蛋白系统',
+  '48H 干痒舒缓洗护',
+  '强力除垢喷剂系列',
+  'B5 修护精华',
+  '干燥粗糙修护乳',
+  '胶原蛋白面膜组合',
+  '8D 玻尿酸钠精华',
+];
+
+export const ecommerceAllImages = ecommerceImageTitles.map((title, index) => {
+  const number = String(index + 1).padStart(2, '0');
+  return {
+    image: asset(`ecommerce/all/ecommerce-all-${number}.jpg`),
+    label: `E-commerce Visual ${number}`,
     title,
   };
 });
